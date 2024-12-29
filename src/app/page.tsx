@@ -103,9 +103,9 @@ export default function Home() {
                 gap={12}
                 alignItems="center"
                 justifyContent="center"
-                flexDir={{ base: "column", lg: "row" }}
+                flexDir={{ base: "column", sm: "row" }}
             >
-                <Box w={{ base: "100%", lg: "64%" }}>
+                <Box w={{ base: "100%", sm: "64%" }}>
                     <Image borderRadius="md" src="/main-visual.webp" alt="レッスン中の画像" />
                 </Box>
                 <Flex alignItems="center" flexDir="column">
@@ -133,13 +133,13 @@ export default function Home() {
                                 gap={2}
                                 alignItems="center"
                                 justifyContent="space-between"
-                                flexDir={{ base: "column-reverse", md: "row" }}
+                                flexDir={{ base: "column-reverse", sm: "row" }}
                             >
                                 <Box w="100%">
                                     <Heading size="lg">{item.title}</Heading>
                                     <Text>{item.description}</Text>
                                 </Box>
-                                <Image src={item.imageSrc} alt={item.imageAlt} w={{ base: "100%", md: "420px" }} borderRadius="md" />
+                                <Image src={item.imageSrc} alt={item.imageAlt} w={{ base: "100%", sm: "420px" }} borderRadius="md" />
                             </Flex>
                         )}
                     </For>
