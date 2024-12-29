@@ -1,4 +1,4 @@
-import { Box, Button, Card, Flex, For, Heading, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Card, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuArrowRight, LuExternalLink } from "react-icons/lu";
 
@@ -96,11 +96,10 @@ const ACTIVITY_BASES: {
 
 export default function Home() {
     return (
-        <Stack maxW={1200} p={4} gap={20} mx="auto">
+        <Stack maxW={1200} p={4} gap={20} pt={12} mx="auto">
             <Flex
                 w="100%"
                 h="calc(100dvh - 48px)"
-                mt={12}
                 gap={12}
                 alignItems="center"
                 justifyContent="center"
@@ -111,7 +110,11 @@ export default function Home() {
                 </Box>
                 <Flex alignItems="center" flexDir="column">
                     <Box>
-                        <Heading size={{ base: "4xl", md: "6xl" }}>手話で踊ろう</Heading>
+                        <Heading size={{ base: "4xl", md: "6xl" }}>
+                            <Highlight query={["手話", "踊"]} styles={{ color: "cyan.solid" }}>
+                                手話で踊ろう
+                            </Highlight>
+                        </Heading>
                         <Text mt={2}>
                             私たち「スマイル」は60人程度で活動している手話ダンスグループです。
                             <br />

@@ -1,6 +1,6 @@
 import { Button, Center, Heading, Link, Text, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { LuTelescope } from "react-icons/lu";
+import { LuArrowLeft, LuTelescope } from "react-icons/lu";
 
 export default function NotFound() {
     return (
@@ -11,7 +11,9 @@ export default function NotFound() {
                 <Text>お探しのページは見つかりませんでした</Text>
                 <Link asChild>
                     <NextLink href="/">
-                        <Button>トップへ戻る</Button>
+                        <Button>
+                            <LuArrowLeft /> トップへ戻る
+                        </Button>
                     </NextLink>
                 </Link>
             </VStack>

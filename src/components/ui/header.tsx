@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
                     </Text>
                 </NextLink>
             </Link>
-            <HStack>
+            <HStack gap={4}>
                 <Link asChild>
                     <NextLink href="/blogs">
                         <Heading size="sm">ブログ</Heading>
