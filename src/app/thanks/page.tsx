@@ -1,4 +1,5 @@
-import { Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { LuArrowLeft } from "react-icons/lu";
 
 export default function Thanks() {
@@ -12,9 +13,13 @@ export default function Thanks() {
                     通常、3日以内にご連絡を差し上げておりますが、万が一ご連絡がない場合は、迷惑メールフォルダをご確認いただき、お手数をおかけいたしますが、再度お問い合わせいただけますと幸いです。
                 </Text>
                 <Flex justifyContent="center">
-                    <Button>
-                        <LuArrowLeft /> トップへ戻る
-                    </Button>
+                    <Link asChild>
+                        <NextLink href="/">
+                            <Button>
+                                <LuArrowLeft /> トップへ戻る
+                            </Button>
+                        </NextLink>
+                    </Link>
                 </Flex>
             </Stack>
         </Stack>
