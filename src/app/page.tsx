@@ -1,6 +1,6 @@
-import { Box, Button, Flex, For, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Card, Flex, For, Heading, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { LuArrowRight } from "react-icons/lu";
+import { LuArrowRight, LuExternalLink } from "react-icons/lu";
 
 const ACTIVITY_CONTENTS: {
     title: string;
@@ -25,6 +25,72 @@ const ACTIVITY_CONTENTS: {
         imageSrc: "/activity/volunteer.webp",
         imageAlt: "ボランティア活動中の画像",
         description: "地域の老人福祉施設、病院、学校や学童などで披露させて頂いています。",
+    },
+];
+
+const ACTIVITY_BASES: {
+    imageSrc: string;
+    imageAlt: string;
+    locationName: string;
+    placeName: string;
+    prefecture: string;
+    mapUrl: string;
+}[] = [
+    {
+        imageSrc: "/base/chuo.webp",
+        imageAlt: "中央区の活動場所",
+        locationName: "中央区",
+        placeName: "月島社会教育会館",
+        prefecture: "東京都",
+        mapUrl: "https://goo.gl/maps/Eai2HNUNq7Rnqi8VA",
+    },
+    {
+        imageSrc: "/base/suginami.webp",
+        imageAlt: "杉並区の活動場所",
+        locationName: "杉並区",
+        placeName: "高円寺ゆうゆう館",
+        prefecture: "東京都",
+        mapUrl: "https://goo.gl/maps/9yvzsq6NLwpt7DSk6",
+    },
+    {
+        imageSrc: "/base/kodaira.webp",
+        imageAlt: "小平市の活動場所",
+        locationName: "小平市",
+        placeName: "美園地域センター他",
+        prefecture: "東京都",
+        mapUrl: "https://goo.gl/maps/DXwji5U968diq2VC9",
+    },
+    {
+        imageSrc: "/base/kita.webp",
+        imageAlt: "北区の活動場所",
+        locationName: "北区",
+        placeName: "カルチャースペースミュー",
+        prefecture: "東京都",
+        mapUrl: "https://maps.app.goo.gl/LWy3Gsbd11oiRc6e8",
+    },
+    {
+        imageSrc: "/base/souka.webp",
+        imageAlt: "草加市の活動場所",
+        locationName: "草加市",
+        placeName: "草加市民体育館",
+        prefecture: "埼玉県",
+        mapUrl: "https://goo.gl/maps/yhsRrDe9LpWU8enw7",
+    },
+    {
+        imageSrc: "/base/koshigaya.webp",
+        imageAlt: "越谷市の活動場所",
+        locationName: "越谷市",
+        placeName: "越谷市北部市民会館",
+        prefecture: "埼玉県",
+        mapUrl: "https://goo.gl/maps/azti3qa1uvxXeK4b9",
+    },
+    {
+        imageSrc: "/base/satte.webp",
+        imageAlt: "幸手市の活動場所",
+        locationName: "幸手市",
+        placeName: "幸手市中央公民館",
+        prefecture: "埼玉県",
+        mapUrl: "https://goo.gl/maps/XWmymw9pbkTJ5E4z7",
     },
 ];
 
@@ -92,6 +158,28 @@ export default function Home() {
                         </Button>
                     </NextLink>
                 </Flex>
+            </Box>
+            <Box w="100%">
+                <Heading size={{ base: "2xl", md: "3xl" }}>活動場所</Heading>
+                <SimpleGrid minChildWidth="3xs" mt={4} gap={4}>
+                    <For each={ACTIVITY_BASES}>
+                        {(item, index) => (
+                            <Card.Root key={index} size="sm" overflow="hidden">
+                                <Image src={item.imageSrc} alt={item.imageAlt} />
+                                <Card.Body>
+                                    <Card.Title>{item.placeName}</Card.Title>
+                                    <Card.Description>
+                                        {item.prefecture} {item.locationName}
+                                        <Link href={item.mapUrl} target="_blank" variant="underline" color="fg.muted" ml={2}>
+                                            Google Map
+                                            <LuExternalLink />
+                                        </Link>
+                                    </Card.Description>
+                                </Card.Body>
+                            </Card.Root>
+                        )}
+                    </For>
+                </SimpleGrid>
             </Box>
         </Stack>
     );
