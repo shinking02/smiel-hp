@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
             position="fixed"
             top={0}
             left={0}
-            bg="rgba(255, 255, 255, 0.8)"
+            bg="linear-gradient(to bottom, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0.7) 100%)"
             backdropFilter="blur(5px)"
             zIndex={100}
         >
