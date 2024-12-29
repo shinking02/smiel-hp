@@ -111,7 +111,7 @@ export default function Home() {
                 <Flex alignItems="center" flexDir="column">
                     <Box>
                         <Heading size={{ base: "3xl", md: "5xl" }}>
-                            <Highlight query={["手話", "踊"]} styles={{ color: "cyan.solid", fontSize: { base: "3xl", md: "6xl" } }}>
+                            <Highlight query={["手話", "踊"]} styles={{ color: "cyan.solid", fontSize: { base: "4xl", md: "6xl" } }}>
                                 手話で踊ろう
                             </Highlight>
                         </Heading>

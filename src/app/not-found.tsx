@@ -1,4 +1,5 @@
-import { Button, Center, Heading, Link, Text, VStack } from "@chakra-ui/react";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Button, Center, Link, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuArrowLeft, LuTelescope } from "react-icons/lu";
 
@@ -6,9 +7,7 @@ export default function NotFound() {
     return (
         <Center h="100dvh" px={4}>
             <VStack>
-                <LuTelescope size={64} />
-                <Heading>404 Not Found</Heading>
-                <Text>お探しのページは見つかりませんでした</Text>
+                <EmptyState icon={<LuTelescope />} title="404 Not Found" description="お探しのページは見つかりませんでした" />
                 <Link asChild>
                     <NextLink href="/">
                         <Button>
