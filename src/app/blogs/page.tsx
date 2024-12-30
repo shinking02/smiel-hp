@@ -6,11 +6,9 @@ import { BlogPagination } from "./blog-pagenation";
 const PAGE_SIZE = 12;
 type BlogsParams = Promise<{ page?: string }>;
 
-export default async function Blogs(props: { params: BlogsParams }) {
-    const params = await props.params;
-    const page = Number(params.page) || 1;
-    console.log(page);
-    console.log(params);
+export default async function Blogs(props: { searchParams: BlogsParams }) {
+    const searchParams = await props.searchParams;
+    const page = Number(searchParams.page) || 1;
     const blogs: { contents: { id: string; title: string; date: string; eyecatch: { url: string } }[]; totalCount: number } =
         await microCMSClient.get({
             endpoint: "blogs",

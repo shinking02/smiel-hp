@@ -1,6 +1,7 @@
 import { BlogCard } from "@/components/ui/blog-card";
+import { Button } from "@/components/ui/button";
 import { microCMSClient } from "@/lib/microCMSClient";
-import { Box, Button, Card, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Card, Center, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { LuArrowRight } from "react-icons/lu";
@@ -140,13 +141,13 @@ export default async function Home() {
                         )}
                     </For>
                 </SimpleGrid>
-                <Flex justifyContent="center">
+                <Center>
                     <NextLink href="/blogs">
                         <Button mt={4}>
                             ブログ一覧 <LuArrowRight />
                         </Button>
                     </NextLink>
-                </Flex>
+                </Center>
             </Box>
             <Box w="100%">
                 <Heading size={{ base: "2xl", md: "3xl" }}>活動内容</Heading>
@@ -184,13 +185,13 @@ export default async function Home() {
                     <br />
                     まずは見学や体験から始めてみませんか？お気軽にお問い合わせください。
                 </Text>
-                <Flex justifyContent="center">
+                <Center>
                     <NextLink href="/contact">
                         <Button mt={4}>
                             お問い合わせ <LuArrowRight />
                         </Button>
                     </NextLink>
-                </Flex>
+                </Center>
             </Box>
             <Box w="100%">
                 <Heading size={{ base: "2xl", md: "3xl" }}>活動場所</Heading>
@@ -203,6 +204,7 @@ export default async function Home() {
                                         <NextImage
                                             src={item.imageSrc}
                                             fill
+                                            sizes="(max-width: 278px) 30vw, (max-width: 278px) 30vw"
                                             style={{
                                                 objectFit: "cover",
                                             }}
