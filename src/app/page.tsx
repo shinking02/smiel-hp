@@ -1,4 +1,4 @@
-import { BlogCard } from "@/components/blog-card";
+import { BlogCard } from "@/components/ui/blog-card";
 import { microCMSClient } from "@/lib/microCMSClient";
 import { Box, Button, Card, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import NextImage from "next/image";

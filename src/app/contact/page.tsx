@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/button";
-import { Field } from "@/components/field";
+import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
 import { Flex, Heading, Input, Stack, Text, Textarea } from "@chakra-ui/react";
 import { useState } from "react";
 import { LuSend } from "react-icons/lu";
