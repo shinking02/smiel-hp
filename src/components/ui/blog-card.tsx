@@ -17,7 +17,7 @@ export const BlogCard = (props: BlogCardProps) => {
     return (
         <Link href={`/blogs/${props.id}`}>
             <Card.Root size="sm" w="100%" overflow="hidden" flexDir={{ base: "row", sm: "column" }}>
-                <Box position="relative" w={{ base: "32%", sm: "auto" }} h={{ base: "auto", sm: "180px" }}>
+                <Box position="relative" w={{ base: "32%", sm: "auto" }} h={{ base: "auto", sm: "180px" }} flexShrink={0}>
                     <NextImage
                         src={props.eyecatchUrl}
                         fill
