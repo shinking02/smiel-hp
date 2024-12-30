@@ -107,7 +107,7 @@ export default async function Home() {
         <Stack maxW={1200} p={4} gap={20} pt={12} mx="auto">
             <Flex
                 w="100%"
-                h="calc(100dvh - 48px)"
+                h="calc(100vh - 48px)"
                 gap={12}
                 alignItems="center"
                 justifyContent="center"
