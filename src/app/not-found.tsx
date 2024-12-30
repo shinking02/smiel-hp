@@ -1,4 +1,4 @@
-import { EmptyState } from "@/components/ui/empty-state";
+import { EmptyState } from "@/components/empty-state";
 import { Button, Center, Link, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuArrowLeft, LuTelescope } from "react-icons/lu";

@@ -1,6 +1,6 @@
-import { Footer } from "@/components/ui/footer";
-import { Header } from "@/components/ui/header";
-import { Provider } from "@/components/ui/provider";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { Provider } from "@/components/provider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
