@@ -105,14 +105,7 @@ export default async function Home() {
 
     return (
         <Stack maxW={1200} p={4} gap={20} pt={12} mx="auto">
-            <Flex
-                w="100%"
-                h="calc(100vh - 48px)"
-                gap={12}
-                alignItems="center"
-                justifyContent="center"
-                flexDir={{ base: "column", sm: "row" }}
-            >
+            <Flex w="100%" h="88vh" gap={12} alignItems="center" justifyContent="center" flexDir={{ base: "column", sm: "row" }}>
                 <Box w={{ base: "100%", sm: "64%" }}>
                     <Image borderRadius="md" src="/main-visual.webp" alt="レッスン中の画像" />
                 </Box>
