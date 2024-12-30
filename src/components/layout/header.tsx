@@ -1,5 +1,4 @@
 import { Flex, Heading, HStack, Image, Link, Text } from "@chakra-ui/react";
-import NextLink from "next/link";
 
 export const Header: React.FC = () => {
     return (
@@ -16,24 +15,18 @@ export const Header: React.FC = () => {
             backdropFilter="blur(5px)"
             zIndex={100}
         >
-            <Link asChild>
-                <NextLink href="/">
-                    <Image w={8} h={8} src="/logo.svg" alt="手話ダンススマイルのロゴ" />
-                    <Text fontWeight="bold" hideBelow="sm">
-                        手話ダンススマイル
-                    </Text>
-                </NextLink>
+            <Link href="/">
+                <Image w={8} h={8} src="/logo.svg" alt="手話ダンススマイルのロゴ" />
+                <Text fontWeight="bold" hideBelow="sm">
+                    手話ダンススマイル
+                </Text>
             </Link>
             <HStack gap={4}>
-                <Link asChild>
-                    <NextLink href="/blogs">
-                        <Heading size="sm">ブログ</Heading>
-                    </NextLink>
+                <Link href="/blogs">
+                    <Heading size="sm">ブログ</Heading>
                 </Link>
-                <Link asChild>
-                    <NextLink href="/contact">
-                        <Heading size="sm">お問い合わせ</Heading>
-                    </NextLink>
+                <Link href="/contact">
+                    <Heading size="sm">お問い合わせ</Heading>
                 </Link>
             </HStack>
         </Flex>

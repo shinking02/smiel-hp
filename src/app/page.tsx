@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { microCMSClient } from "@/lib/microCMSClient";
 import { Box, Card, Center, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
-import NextLink from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 
 const ACTIVITY_CONTENTS: {
@@ -142,11 +141,11 @@ export default async function Home() {
                     </For>
                 </SimpleGrid>
                 <Center>
-                    <NextLink href="/blogs">
+                    <Link href="/blogs">
                         <Button mt={4}>
                             ブログ一覧 <LuArrowRight />
                         </Button>
-                    </NextLink>
+                    </Link>
                 </Center>
             </Box>
             <Box w="100%">
@@ -186,11 +185,11 @@ export default async function Home() {
                     まずは見学や体験から始めてみませんか？お気軽にお問い合わせください。
                 </Text>
                 <Center>
-                    <NextLink href="/contact">
+                    <Link href="/contact">
                         <Button mt={4}>
                             お問い合わせ <LuArrowRight />
                         </Button>
-                    </NextLink>
+                    </Link>
                 </Center>
             </Box>
             <Box w="100%">
