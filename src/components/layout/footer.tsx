@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
             <Box textAlign="center">
                 <Link href="/">
                     <Image w={8} h={8} src="/logo-white.svg" alt="手話ダンススマイルのロゴ" color="fg.inverted" />
-                    <Text fontWeight="bold" hideBelow="sm" color="fg.inverted">
+                    <Text fontWeight="bold" color="fg.inverted">
                         手話ダンススマイル
                     </Text>
                 </Link>
