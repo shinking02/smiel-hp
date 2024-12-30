@@ -111,9 +111,9 @@ export default async function Home() {
                 gap={12}
                 alignItems="center"
                 justifyContent="center"
-                flexDir={{ base: "column", md: "row" }}
+                flexDir={{ base: "column", sm: "row" }}
             >
-                <Box w={{ base: "100%", md: "64%" }}>
+                <Box w={{ base: "100%", sm: "64%" }}>
                     <Image borderRadius="md" src="/main-visual.webp" alt="レッスン中の画像" />
                 </Box>
                 <Flex alignItems="center" flexDir="column">
