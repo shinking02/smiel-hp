@@ -12,7 +12,7 @@ export default function Contact() {
     const [message, setMessage] = useState("");
 
     return (
-        <Stack maxW={800} p={4} gap={12} pt={12} mx="auto">
+        <Stack maxW={800} p={4} gap={12} pt={16} mx="auto">
             <Stack gap={4}>
                 <Heading size={{ base: "2xl", md: "3xl" }}>お問い合わせ</Heading>
                 <Text mt={4}>

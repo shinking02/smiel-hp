@@ -1,6 +1,9 @@
+import { BlogCard } from "@/components/blog-card";
+import { microCMSClient } from "@/lib/microCMSClient";
 import { Box, Button, Card, Flex, For, Heading, Highlight, Image, Link, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import NextImage from "next/image";
 import NextLink from "next/link";
-import { LuArrowRight, LuExternalLink } from "react-icons/lu";
+import { LuArrowRight } from "react-icons/lu";
 
 const ACTIVITY_CONTENTS: {
     title: string;
@@ -94,7 +97,12 @@ const ACTIVITY_BASES: {
     },
 ];
 
-export default function Home() {
+export default async function Home() {
+    const latestBlogs: { contents: { id: string; title: string; date: string; eyecatch: { url: string } }[] } = await microCMSClient.get({
+        endpoint: "blogs",
+        queries: { limit: 4, fields: "id,title,date,eyecatch" },
+    });
+
     return (
         <Stack maxW={1200} p={4} gap={20} pt={12} mx="auto">
             <Flex
@@ -124,6 +132,23 @@ export default function Home() {
                 </Flex>
             </Flex>
             <Box w="100%">
+                <Heading size={{ base: "2xl", md: "3xl" }}>ブログ</Heading>
+                <SimpleGrid minChildWidth="3xs" mt={4} gap={4}>
+                    <For each={latestBlogs.contents}>
+                        {(item, index) => (
+                            <BlogCard key={index} id={item.id} title={item.title} date={item.date} eyecatchUrl={item.eyecatch.url} />
+                        )}
+                    </For>
+                </SimpleGrid>
+                <Flex justifyContent="center">
+                    <NextLink href="/blogs">
+                        <Button mt={4}>
+                            ブログ一覧 <LuArrowRight />
+                        </Button>
+                    </NextLink>
+                </Flex>
+            </Box>
+            <Box w="100%">
                 <Heading size={{ base: "2xl", md: "3xl" }}>活動内容</Heading>
                 <Flex mt={4} flexDir="column" gap={12}>
                     <For each={ACTIVITY_CONTENTS}>
@@ -139,7 +164,7 @@ export default function Home() {
                                     <Heading size="lg">{item.title}</Heading>
                                     <Text>{item.description}</Text>
                                 </Box>
-                                <Image src={item.imageSrc} alt={item.imageAlt} w={{ base: "100%", sm: "420px" }} borderRadius="md" />
+                                <Image src={item.imageSrc} alt={item.imageAlt} w={{ base: "100%", sm: "400px" }} borderRadius="md" />
                             </Flex>
                         )}
                     </For>
@@ -167,19 +192,26 @@ export default function Home() {
                 <SimpleGrid minChildWidth="3xs" mt={4} gap={4}>
                     <For each={ACTIVITY_BASES}>
                         {(item, index) => (
-                            <Card.Root key={index} size="sm" overflow="hidden">
-                                <Image src={item.imageSrc} alt={item.imageAlt} />
-                                <Card.Body>
-                                    <Card.Title>{item.placeName}</Card.Title>
-                                    <Card.Description>
-                                        {item.prefecture} {item.locationName}
-                                        <Link href={item.mapUrl} target="_blank" variant="underline" color="fg.muted" ml={2}>
-                                            Google Map
-                                            <LuExternalLink />
-                                        </Link>
-                                    </Card.Description>
-                                </Card.Body>
-                            </Card.Root>
+                            <Link href={item.mapUrl} target="_blank">
+                                <Card.Root key={index} size="sm" w="100%" overflow="hidden" flexDir={{ base: "row", sm: "column" }}>
+                                    <Box position="relative" w={{ base: "36%", sm: "auto" }} h={{ base: "auto", sm: "180px" }}>
+                                        <NextImage
+                                            src={item.imageSrc}
+                                            fill
+                                            style={{
+                                                objectFit: "cover",
+                                            }}
+                                            alt={item.imageAlt}
+                                        />
+                                    </Box>
+                                    <Card.Body>
+                                        <Card.Title>{item.placeName}</Card.Title>
+                                        <Card.Description>
+                                            {item.prefecture} {item.locationName}
+                                        </Card.Description>
+                                    </Card.Body>
+                                </Card.Root>
+                            </Link>
                         )}
                     </For>
                 </SimpleGrid>
