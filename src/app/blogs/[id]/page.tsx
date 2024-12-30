@@ -8,7 +8,7 @@ type BlogParams = Promise<{ id: string }>;
 export default async function Blog(props: { params: BlogParams }) {
     const params = await props.params;
     const blog = await microCMSClient.get({ endpoint: `blogs/${params.id}` });
-    const date = new Date(blog.date);
+    const date = new Date(new Date(blog.date).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" }));
 
     return (
         <Stack maxW={800} p={4} gap={4} pt={16} mx="auto">
@@ -19,7 +19,10 @@ export default async function Blog(props: { params: BlogParams }) {
             <Box position="relative" w="100%" h={{ base: 280, sm: 480 }} borderRadius="md" overflow="hidden">
                 <NextImage src={blog.eyecatch.url} fill style={{ objectFit: "cover" }} alt={`${blog.title}のサムネイル`} />
             </Box>
-            <Box dangerouslySetInnerHTML={{ __html: blog.content }} css={{ "& img": { marginY: 6, borderRadius: "md" } }} />
+            <Box
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+                css={{ "& img": { marginY: 6, borderRadius: "md" }, "& p": { marginY: 4 } }}
+            />
             <Center>
                 <BlogBackButton />
             </Center>
