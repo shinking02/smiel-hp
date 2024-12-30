@@ -199,7 +199,7 @@ export default async function Home() {
                         {(item, index) => (
                             <Link href={item.mapUrl} target="_blank">
                                 <Card.Root key={index} size="sm" w="100%" overflow="hidden" flexDir={{ base: "row", sm: "column" }}>
-                                    <Box position="relative" w={{ base: "36%", sm: "auto" }} h={{ base: "auto", sm: "180px" }}>
+                                    <Box position="relative" w={{ base: "32%", sm: "auto" }} h={{ base: "auto", sm: "180px" }}>
                                         <NextImage
                                             src={item.imageSrc}
                                             fill
