@@ -16,7 +16,7 @@ export default async function Blog(props: { params: BlogParams }) {
                 <Heading size={{ base: "2xl", md: "3xl" }}>{blog.title}</Heading>
                 <Text color="fg.muted">{`${date.getFullYear()}年 ${date.getMonth() + 1}月${date.getDate()}日`}</Text>
             </Box>
-            <Box position="relative" w="100%" h={300} borderRadius="md" overflow="hidden">
+            <Box position="relative" w="100%" h={{ base: 280, sm: 480 }} borderRadius="md" overflow="hidden">
                 <NextImage src={blog.eyecatch.url} fill style={{ objectFit: "cover" }} alt={`${blog.title}のサムネイル`} />
             </Box>
             <Box dangerouslySetInnerHTML={{ __html: blog.content }} css={{ "& img": { marginY: 6, borderRadius: "md" } }} />
