@@ -9,7 +9,7 @@ export default function NotFound() {
             <VStack>
                 <EmptyState icon={<LuTelescope />} title="404 Not Found" description="お探しのページは見つかりませんでした" />
                 <Link href="/">
-                    <Button>
+                    <Button as="div">
                         <LuArrowLeft /> トップへ戻る
                     </Button>
                 </Link>
