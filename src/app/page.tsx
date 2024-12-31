@@ -133,9 +133,9 @@ export default async function Home() {
                         )}
                     </For>
                 </SimpleGrid>
-                <Center>
+                <Center mt={4}>
                     <Link href="/blogs">
-                        <Button mt={4}>
+                        <Button as="div">
                             ブログ一覧 <LuArrowRight />
                         </Button>
                     </Link>
@@ -177,9 +177,9 @@ export default async function Home() {
                     <br />
                     まずは見学や体験から始めてみませんか？お気軽にお問い合わせください。
                 </Text>
-                <Center>
+                <Center mt={4}>
                     <Link href="/contact">
-                        <Button mt={4}>
+                        <Button as="div">
                             お問い合わせ <LuArrowRight />
                         </Button>
                     </Link>
