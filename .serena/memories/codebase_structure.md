@@ -33,10 +33,11 @@ public/                       # 静的アセット
 - `/` - ホームページ（メインビジュアル）
 - `/blogs` - ブログ一覧（ページネーション付き）
 - `/blogs/[id]` - 個別ブログ記事
-- `/contact` - お問い合わせフォーム  
+- `/contact` - お問い合わせフォーム
 - `/thanks` - サンクスページ
 
 ## データフェッチング
+
 - Server-side renderingでmicroCMS APIからコンテンツ取得
 - TypeScript型安全なAPI レスポンス
 - ページネーション（12記事/ページ）
