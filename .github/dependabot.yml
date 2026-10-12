@@ -1,0 +1,43 @@
+version: 2
+# `labels: []` is not honored yet; default labels are still applied.
+# https://github.com/dependabot/dependabot-core/issues/11783
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 10
+    groups:
+      npm:
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: chore
+    labels: []
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 10
+    groups:
+      github-actions:
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: chore
+    labels: []
+
+  - package-ecosystem: terraform
+    directories:
+      - "/infra/envs/*"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 10
+    groups:
+      terraform:
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: chore
+    labels: []

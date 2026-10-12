@@ -1,0 +1,47 @@
+name: "[WC] Terraform apply"
+
+on:
+  workflow_call:
+    inputs:
+      organization:
+        description: "Terraform Cloud organization"
+        required: true
+        type: string
+      workspace:
+        description: "Terraform Cloud workspace to apply"
+        required: true
+        type: string
+    secrets:
+      TF_API_TOKEN:
+        required: true
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # The tfc-workflows actions read these from the environment, not from inputs.
+    env:
+      TF_CLOUD_ORGANIZATION: ${{ inputs.organization }}
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@8e08d1ba957673f5fbf971a22b3219639dc45661 # v1.3.2
+        id: upload
+        with:
+          workspace: ${{ inputs.workspace }}
+          directory: infra
+
+      - uses: hashicorp/tfc-workflows-github/actions/create-run@8e08d1ba957673f5fbf971a22b3219639dc45661 # v1.3.2
+        id: create-run
+        with:
+          workspace: ${{ inputs.workspace }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+          message: "Apply from GitHub Actions ${{ github.sha }}"
+
+      # Skipped when the plan has no changes, since the run is not confirmable then.
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@8e08d1ba957673f5fbf971a22b3219639dc45661 # v1.3.2
+        if: fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Apply from GitHub Actions ${{ github.sha }}"

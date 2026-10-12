@@ -1,0 +1,14 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Keep this shorter than the Dependabot cooldown (10 days). If it were longer,
+# Dependabot would open PRs for versions pnpm still refuses to resolve.
+minimumReleaseAge: 10080 # 7 days
+
+# Pin exact versions; Dependabot owns the upgrades.
+savePrefix: ""
+
+# Required by the Next.js dependency tree
+ignoredBuiltDependencies:
+  - sharp

@@ -1,0 +1,84 @@
+name: "[CI] Terraform"
+
+# Release PRs are opened as drafts by GITHUB_TOKEN, which never starts a workflow,
+# so ready_for_review is what triggers the production plan.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "infra/**"
+      - "VERSION"
+      - ".github/workflows/ci-terraform.yaml"
+      - ".github/workflows/wc-terraform-plan.yaml"
+
+permissions:
+  contents: read
+  # paths-filter lists the changed files through the API on pull_request events.
+  pull-requests: read
+
+jobs:
+  changes:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      version: ${{ steps.filter.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            infra:
+              - 'infra/**'
+              - '.github/workflows/ci-terraform.yaml'
+              - '.github/workflows/wc-terraform-plan.yaml'
+            version:
+              - 'VERSION'
+
+  fmt:
+    name: Format check
+    needs: changes
+    if: needs.changes.outputs.infra == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+      - run: terraform fmt -check -recursive infra
+
+  plan-shared:
+    name: Speculative plan (shared)
+    needs: changes
+    if: needs.changes.outputs.infra == 'true'
+    uses: ./.github/workflows/wc-terraform-plan.yaml
+    with:
+      organization: __HCP_ORGANIZATION__
+      workspace: smiel-hp-shared
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+  plan-development:
+    name: Speculative plan (development)
+    needs: changes
+    if: needs.changes.outputs.infra == 'true'
+    uses: ./.github/workflows/wc-terraform-plan.yaml
+    with:
+      organization: __HCP_ORGANIZATION__
+      workspace: smiel-hp-development
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+  plan-production:
+    name: Speculative plan (production)
+    needs: changes
+    if: needs.changes.outputs.version == 'true'
+    uses: ./.github/workflows/wc-terraform-plan.yaml
+    with:
+      organization: __HCP_ORGANIZATION__
+      workspace: smiel-hp-production
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
