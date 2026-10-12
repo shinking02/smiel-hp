@@ -22,7 +22,7 @@ jobs:
     name: Terraform apply
     uses: ./.github/workflows/wc-terraform-apply.yaml
     with:
-      organization: __HCP_ORGANIZATION__
+      organization: Shinking02
       workspace: smiel-hp-production
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}

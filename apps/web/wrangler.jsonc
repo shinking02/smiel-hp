@@ -2,7 +2,7 @@
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "smiel-hp-web",
 	"main": ".open-next/worker.js",
-	"account_id": "__CLOUDFLARE_ACCOUNT_ID__",
+	"account_id": "35e42b94d82687424bf13b3c10f77238",
 	"compatibility_date": "2026-10-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"observability": { "enabled": true },
@@ -13,7 +13,7 @@
 	"env": {
 		"development": {
 			"name": "smiel-hp-development-web",
-			"routes": [{ "pattern": "dev.__DOMAIN__", "custom_domain": true }],
+			"routes": [{ "pattern": "dev.smile-sign.com", "custom_domain": true }],
 			"services": [
 				{
 					"binding": "WORKER_SELF_REFERENCE",
@@ -31,7 +31,7 @@
 		},
 		"production": {
 			"name": "smiel-hp-production-web",
-			"routes": [{ "pattern": "__DOMAIN__", "custom_domain": true }],
+			"routes": [{ "pattern": "smile-sign.com", "custom_domain": true }],
 			"services": [
 				{
 					"binding": "WORKER_SELF_REFERENCE",

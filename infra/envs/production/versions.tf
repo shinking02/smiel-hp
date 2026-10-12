@@ -1,9 +1,9 @@
 terraform {
   # The effective CLI version comes from the HCP workspace setting, so keep this loose.
-  required_version = "~> 1.14"
+  required_version = "~> 1.15"
 
   cloud {
-    organization = "__HCP_ORGANIZATION__"
+    organization = "Shinking02"
 
     workspaces {
       name = "smiel-hp-production"

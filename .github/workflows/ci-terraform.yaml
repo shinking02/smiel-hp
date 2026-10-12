@@ -50,24 +50,13 @@ jobs:
       - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
       - run: terraform fmt -check -recursive infra
 
-  plan-shared:
-    name: Speculative plan (shared)
-    needs: changes
-    if: needs.changes.outputs.infra == 'true'
-    uses: ./.github/workflows/wc-terraform-plan.yaml
-    with:
-      organization: __HCP_ORGANIZATION__
-      workspace: smiel-hp-shared
-    secrets:
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-
   plan-development:
     name: Speculative plan (development)
     needs: changes
     if: needs.changes.outputs.infra == 'true'
     uses: ./.github/workflows/wc-terraform-plan.yaml
     with:
-      organization: __HCP_ORGANIZATION__
+      organization: Shinking02
       workspace: smiel-hp-development
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
@@ -78,7 +67,7 @@ jobs:
     if: needs.changes.outputs.version == 'true'
     uses: ./.github/workflows/wc-terraform-plan.yaml
     with:
-      organization: __HCP_ORGANIZATION__
+      organization: Shinking02
       workspace: smiel-hp-production
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}

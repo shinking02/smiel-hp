@@ -1,5 +1,5 @@
 locals {
-  domain = "__DOMAIN__"
+  domain = "smile-sign.com"
 }
 
 module "stack" {

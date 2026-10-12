@@ -34,26 +34,13 @@ jobs:
               - '.github/workflows/cd-development.yaml'
               - '.github/workflows/wc-web-deploy.yaml'
 
-  # The zone and Email Routing are shared by both environments, so they converge
-  # here, ahead of the first environment that depends on them.
-  terraform-shared:
-    name: Terraform apply (shared)
+  terraform:
+    name: Terraform apply
     needs: changes
     if: needs.changes.outputs.infra == 'true'
     uses: ./.github/workflows/wc-terraform-apply.yaml
     with:
-      organization: __HCP_ORGANIZATION__
-      workspace: smiel-hp-shared
-    secrets:
-      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-
-  terraform:
-    name: Terraform apply (development)
-    needs: [changes, terraform-shared]
-    if: needs.changes.outputs.infra == 'true'
-    uses: ./.github/workflows/wc-terraform-apply.yaml
-    with:
-      organization: __HCP_ORGANIZATION__
+      organization: Shinking02
       workspace: smiel-hp-development
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
@@ -63,7 +50,7 @@ jobs:
     # Upstream jobs are skipped whenever their own paths are unchanged, so always()
     # is what keeps this one reachable. That also stops failures from propagating on
     # their own, hence the explicit rejection.
-    needs: [changes, terraform-shared, terraform]
+    needs: [changes, terraform]
     if: |
       always()
       && needs.changes.outputs.web == 'true'
