@@ -65,9 +65,13 @@
 				"rules": {
 					// React uses className; the rule targets non-React JSX frameworks.
 					"suspicious": { "noReactSpecificProps": "off" },
-					// useSolidForComponent asks for Solid's <For />, which React has no
-					// equivalent of.
-					"performance": { "useSolidForComponent": "off" }
+					// Workers has no next/image optimizer bound; local images ship
+					// pre-sized and microCMS resizes through imgix. useSolidForComponent
+					// asks for Solid's <For />, which React has no equivalent of.
+					"performance": {
+						"noImgElement": "off",
+						"useSolidForComponent": "off"
+					}
 				}
 			},
 			"css": {
