@@ -2,15 +2,11 @@
 import * as v from "valibot";
 
 const schema = v.object({
-	appEnv: v.picklist(["development", "production"]),
-	turnstileSiteKey: v.pipe(v.string(), v.nonEmpty()),
+	// Deploys always set it; local development falls back to the safe side.
+	appEnv: v.optional(v.picklist(["development", "production"]), "development"),
 });
 
-// Next.js inlines NEXT_PUBLIC_* only through the bare global; importing
-// node:process opts out of the substitution.
 export const clientEnv = v.parse(schema, {
-	// biome-ignore-start lint/correctness/noProcessGlobal: see above
+	// biome-ignore lint/correctness/noProcessGlobal: Next.js inlines NEXT_PUBLIC_* only through the bare global; importing node:process opts out of the substitution
 	appEnv: process.env.NEXT_PUBLIC_APP_ENV,
-	turnstileSiteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-	// biome-ignore-end lint/correctness/noProcessGlobal: see above
 });
