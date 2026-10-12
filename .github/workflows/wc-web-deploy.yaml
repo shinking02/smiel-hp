@@ -13,10 +13,12 @@ on:
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
-      # Declared only so the expressions type-check. The job selects an environment,
-      # and GitHub resolves these from that environment's secrets instead.
+      # Both environments read the same microCMS service, so the key lives at the
+      # repository level and has to be handed down by the caller.
       MICROCMS_API_KEY:
-        required: false
+        required: true
+      # Declared only so the expression type-checks. The job selects an environment,
+      # and GitHub resolves it from that environment's secrets instead.
       TURNSTILE_SECRET_KEY:
         required: false
 

@@ -61,3 +61,4 @@ jobs:
       environment: development
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
