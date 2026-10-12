@@ -46,3 +46,6 @@ export const responsiveMicrocmsImage = (
 		height: heightOf(widest, aspectRatio),
 	};
 };
+
+export const isMicrocmsImage = (url: string): boolean =>
+	URL.canParse(url) && new URL(url).hostname === "images.microcms-assets.io";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { responsiveMicrocmsImage } from "./microcms-image";
+import { isMicrocmsImage, responsiveMicrocmsImage } from "./microcms-image";
 
 const URL_BASE = "https://images.microcms-assets.io/assets/abc/def/photo.jpg";
 const PARAMS = "fit=crop&auto=compress&fm=webp";
@@ -45,5 +45,16 @@ describe("responsiveMicrocmsImage", () => {
 		});
 
 		expect(src).toBe(`${URL_BASE}?w=300&h=200&${PARAMS}`);
+	});
+});
+
+describe("isMicrocmsImage", () => {
+	it("accepts the microCMS image host", () => {
+		expect(isMicrocmsImage(URL_BASE)).toBe(true);
+	});
+
+	it("rejects other hosts and malformed URLs", () => {
+		expect(isMicrocmsImage("https://example.com/photo.jpg")).toBe(false);
+		expect(isMicrocmsImage("/images/photo.jpg")).toBe(false);
 	});
 });
