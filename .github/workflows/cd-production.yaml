@@ -33,9 +33,9 @@ jobs:
     uses: ./.github/workflows/wc-web-deploy.yaml
     with:
       environment: production
-    secrets:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+    # Explicitly passed secrets replace the callee's secrets context, which would
+    # hide the environment secrets the deploy job selects; inherit keeps them.
+    secrets: inherit
 
   # Cut the release only after production actually converged.
   release:

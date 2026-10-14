@@ -13,13 +13,10 @@ on:
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
-      # Both environments read the same microCMS service, so the key lives at the
-      # repository level and has to be handed down by the caller.
       MICROCMS_API_KEY:
         required: true
-      # TURNSTILE_SECRET_KEY is deliberately not declared: a declared secret is
-      # resolved from the caller even when it passes nothing, which hides the
-      # environment secret the job selects below.
+      # TURNSTILE_SECRET_KEY is environment scoped, so it is not declared here; it
+      # reaches the job through the caller's `secrets: inherit`.
 
 jobs:
   deploy:
