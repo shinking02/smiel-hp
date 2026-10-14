@@ -5,7 +5,6 @@
 # deliver to verified destinations at no cost.
 resource "cloudflare_email_routing_dns" "main" {
   zone_id = data.cloudflare_zone.main.zone_id
-  name    = local.domain
 }
 
 # Stays pending until the link in the verification email is clicked.
