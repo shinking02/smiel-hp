@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: LayoutProps<"/">) => {
 	return (
-		<html lang="ja">
+		<html lang="ja" data-scroll-behavior="smooth">
 			<body className="flex min-h-dvh flex-col bg-white text-zinc-950 antialiased">
 				<a
 					href="#main"
