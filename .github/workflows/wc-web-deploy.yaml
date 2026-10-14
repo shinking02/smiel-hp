@@ -17,10 +17,9 @@ on:
       # repository level and has to be handed down by the caller.
       MICROCMS_API_KEY:
         required: true
-      # Declared only so the expression type-checks. The job selects an environment,
-      # and GitHub resolves it from that environment's secrets instead.
-      TURNSTILE_SECRET_KEY:
-        required: false
+      # TURNSTILE_SECRET_KEY is deliberately not declared: a declared secret is
+      # resolved from the caller even when it passes nothing, which hides the
+      # environment secret the job selects below.
 
 jobs:
   deploy:
