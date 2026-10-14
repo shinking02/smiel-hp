@@ -1,0 +1,6 @@
+paths:
+  .github/workflows/wc-web-deploy.yaml:
+    ignore:
+      # Environment secrets are readable here without a workflow_call declaration,
+      # which actionlint does not model.
+      - 'property "turnstile_secret_key" is not defined'
