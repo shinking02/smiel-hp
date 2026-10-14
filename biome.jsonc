@@ -1,0 +1,91 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"complexity": "on",
+			"correctness": "on",
+			"performance": "on",
+			"security": {
+				"preset": "all",
+				// Japanese literals read as high entropy; 80 clears them while still
+				// catching API-key shaped strings.
+				"noSecrets": {
+					"level": "error",
+					"options": { "entropyThreshold": 80 }
+				}
+			},
+			"suspicious": {
+				"preset": "all",
+				"noConsole": "off"
+			},
+			"style": {
+				"useConsistentTypeDefinitions": {
+					"level": "error",
+					"options": { "style": "interface" }
+				},
+				"useNodejsImportProtocol": "on",
+				"noParameterAssign": "on",
+				"useErrorCause": "on",
+				"useForOf": "on"
+			},
+			"nursery": {
+				"noFloatingPromises": "error",
+				"noMisusedPromises": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			// A describe block is one function to Biome, so the line cap fights the
+			// natural shape of a spec file.
+			"includes": ["**/*.spec.ts"],
+			"linter": {
+				"rules": {
+					"complexity": { "noExcessiveLinesPerFunction": "off" }
+				}
+			}
+		},
+		{
+			"includes": ["apps/web/**"],
+			"linter": {
+				"domains": {
+					"next": "recommended",
+					"react": "recommended"
+				},
+				"rules": {
+					// React uses className; the rule targets non-React JSX frameworks.
+					"suspicious": { "noReactSpecificProps": "off" },
+					// Workers has no next/image optimizer bound; local images ship
+					// pre-sized and microCMS resizes through imgix. useSolidForComponent
+					// asks for Solid's <For />, which React has no equivalent of.
+					"performance": {
+						"noImgElement": "off",
+						"useSolidForComponent": "off"
+					}
+				}
+			},
+			"css": {
+				"parser": {
+					"tailwindDirectives": true
+				}
+			}
+		}
+	],
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}

@@ -1,0 +1,64 @@
+name: "[CD] Deployment (Development)"
+
+# Filtering happens per job, not here, so that each job reacts to its own paths.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency: cd-development
+
+jobs:
+  changes:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            infra:
+              - 'infra/**'
+              - '.github/workflows/cd-development.yaml'
+            web:
+              - 'apps/web/**'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/cd-development.yaml'
+              - '.github/workflows/wc-web-deploy.yaml'
+
+  terraform:
+    name: Terraform apply
+    needs: changes
+    if: needs.changes.outputs.infra == 'true'
+    uses: ./.github/workflows/wc-terraform-apply.yaml
+    with:
+      organization: Shinking02
+      workspace: smiel-hp-development
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+  deploy-web:
+    name: Deploy web
+    # Upstream jobs are skipped whenever their own paths are unchanged, so always()
+    # is what keeps this one reachable. That also stops failures from propagating on
+    # their own, hence the explicit rejection.
+    needs: [changes, terraform]
+    if: |
+      always()
+      && needs.changes.outputs.web == 'true'
+      && !contains(needs.*.result, 'failure')
+      && !contains(needs.*.result, 'cancelled')
+    uses: ./.github/workflows/wc-web-deploy.yaml
+    with:
+      environment: development
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}

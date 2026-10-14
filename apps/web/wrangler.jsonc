@@ -1,0 +1,50 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "smiel-hp-web",
+	"main": ".open-next/worker.js",
+	"account_id": "35e42b94d82687424bf13b3c10f77238",
+	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"observability": { "enabled": true },
+	"assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+
+	// Values that differ per environment or must stay out of this public
+	// repository are injected at deploy time; see scripts/deploy.sh.
+	"env": {
+		"development": {
+			"name": "smiel-hp-development-web",
+			"routes": [{ "pattern": "dev.smile-sign.com", "custom_domain": true }],
+			"services": [
+				{
+					"binding": "WORKER_SELF_REFERENCE",
+					"service": "smiel-hp-development-web"
+				}
+			],
+			"r2_buckets": [
+				{
+					"binding": "NEXT_INC_CACHE_R2_BUCKET",
+					"bucket_name": "smiel-hp-development-cache"
+				}
+			],
+			// Delivers only to destinations verified in Email Routing.
+			"send_email": [{ "name": "EMAIL" }]
+		},
+		"production": {
+			"name": "smiel-hp-production-web",
+			"routes": [{ "pattern": "smile-sign.com", "custom_domain": true }],
+			"services": [
+				{
+					"binding": "WORKER_SELF_REFERENCE",
+					"service": "smiel-hp-production-web"
+				}
+			],
+			"r2_buckets": [
+				{
+					"binding": "NEXT_INC_CACHE_R2_BUCKET",
+					"bucket_name": "smiel-hp-production-cache"
+				}
+			],
+			"send_email": [{ "name": "EMAIL" }]
+		}
+	}
+}

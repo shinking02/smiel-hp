@@ -1,0 +1,110 @@
+name: "[CD] Deployment (Production)"
+
+# Production is released on a version bump only, so infra changes reach it through a release.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "VERSION"
+  # Recovery hatch for re-running a release that failed partway through.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# An in-flight production apply must never be cancelled by a newer run.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  terraform:
+    name: Terraform apply
+    uses: ./.github/workflows/wc-terraform-apply.yaml
+    with:
+      organization: Shinking02
+      workspace: smiel-hp-production
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+  deploy-web:
+    name: Deploy web
+    needs: terraform
+    uses: ./.github/workflows/wc-web-deploy.yaml
+    with:
+      environment: production
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+
+  # Cut the release only after production actually converged.
+  release:
+    name: Create release
+    needs: deploy-web
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v$(tr -d '[:space:]' < VERSION)"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists, nothing to do."
+            exit 0
+          fi
+          gh release create "$tag" \
+            --target "$GITHUB_SHA" \
+            --title "$tag" \
+            --generate-notes
+
+  # Opens the pull request that will trigger the next release, so main always has one pending.
+  next-release:
+    name: Create next release PR
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - id: version
+        run: |
+          set -euo pipefail
+          IFS=. read -r major minor patch < VERSION
+          echo "current=${major}.${minor}.${patch}" >> "$GITHUB_OUTPUT"
+          echo "next=${major}.${minor}.$((patch + 1))" >> "$GITHUB_OUTPUT"
+
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_VERSION: ${{ steps.version.outputs.current }}
+          NEXT_VERSION: ${{ steps.version.outputs.next }}
+        run: |
+          set -euo pipefail
+          branch="release/v${NEXT_VERSION}"
+          if [ -n "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            echo "$branch already has an open pull request" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          echo "$NEXT_VERSION" > VERSION
+          git commit -am "chore: bump version to v${NEXT_VERSION}"
+          git push origin "$branch"
+          cat > pr-body.md <<EOF
+          Merging this pull request will release it as \`v${NEXT_VERSION}\` and trigger a deployment to production.
+
+          - When you are ready to release, remove the draft status.
+          - You can check the release contents in the [diff with main](https://github.com/${GITHUB_REPOSITORY}/compare/v${CURRENT_VERSION}...main).
+          EOF
+          gh pr create --draft --base main --head "$branch" \
+            --title "Release \`v${NEXT_VERSION}\`" \
+            --body-file pr-body.md
+          echo "Created draft pull request for v${NEXT_VERSION}" >> "$GITHUB_STEP_SUMMARY"
