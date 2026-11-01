@@ -30,7 +30,7 @@ export const Section = ({
 		<section
 			id={id}
 			aria-labelledby={titleId}
-			className={`scroll-mt-16 ${TONES[tone]}`}
+			className={`scroll-mt-14 ${TONES[tone]}`}
 		>
 			<div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
 				<div className="flex flex-wrap items-end justify-between gap-4">

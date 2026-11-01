@@ -8,7 +8,7 @@ const Accent = ({ children }: { children: string }) => (
 
 export const Hero = () => (
 	<section aria-labelledby="hero-title" className="overflow-hidden">
-		<div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-12 md:min-h-[calc(88dvh-4rem)] md:grid-cols-[1.7fr_1fr] md:gap-14 md:py-16">
+		<div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-12 md:min-h-[calc(88dvh-3.5rem)] md:grid-cols-[1.7fr_1fr] md:gap-14 md:py-16">
 			<div className="relative">
 				<div
 					aria-hidden
