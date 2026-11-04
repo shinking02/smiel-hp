@@ -11,10 +11,10 @@
 		"typecheck": "next typegen && tsc --noEmit"
 	},
 	"dependencies": {
-		"@opennextjs/cloudflare": "1.20.12",
-		"lucide-react": "1.59.0",
+		"@opennextjs/cloudflare": "1.20.13",
+		"lucide-react": "1.61.0",
 		"microcms-js-sdk": "3.6.0",
-		"next": "16.4.2",
+		"next": "16.4.3",
 		"react": "19.3.1",
 		"react-dom": "19.3.1",
 		"server-only": "0.0.1",
@@ -27,6 +27,6 @@
 		"@types/react-dom": "19.3.0",
 		"tailwindcss": "4.3.3",
 		"vitest": "5.0.5",
-		"wrangler": "4.151.1"
+		"wrangler": "4.152.0"
 	}
 }
